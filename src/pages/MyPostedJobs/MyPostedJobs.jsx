@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import useAuth from '../../hooks/useAuth';
 import { Link } from 'react-router-dom';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
 
 const MyPostedJobs = () => {
     const [jobs, setJobs] = useState([]);
     const { user } = useAuth();
+    const axiosSecure = useAxiosSecure();
 
     useEffect(() => {
-        fetch(`http://localhost:5000/jobs?email=${user.email}`)
-            .then(res => res.json())
-            .then(data => setJobs(data))
+        axiosSecure.get(`http://localhost:5000/jobs?email=${user.email}`)
+            .then(data => setJobs(data.data))
     }, [user.email])
 
     return (
@@ -29,7 +30,7 @@ const MyPostedJobs = () => {
                     </thead>
                     <tbody>
                         {
-                            jobs.map((job, index) => <tr>
+                            jobs.map((job, index) => <tr key={index}>
                                 <th>{index + 1}</th>
                                 <td>{job.title}</td>
                                 <td>{job.applicationDeadline}</td>

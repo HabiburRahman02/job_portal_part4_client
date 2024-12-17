@@ -3,7 +3,7 @@ import HotJobCard from './HotJobCard';
 
 const HotJobs = () => {
     const [jobs, setJobs] = useState([]);
-
+    console.log(jobs);
     useEffect(() => {
         fetch('http://localhost:5000/jobs')
             .then(res => res.json())
@@ -16,7 +16,7 @@ const HotJobs = () => {
         <div>
             <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
                 {
-                    jobs.map(job => <HotJobCard key={job._id} job={job}></HotJobCard>)
+                    jobs?.map(job => <HotJobCard key={job._id} job={job}></HotJobCard>)
                 }
             </div>
         </div>
